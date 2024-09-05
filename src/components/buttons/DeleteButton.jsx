@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Delete from "../../../public/assets/Delete-icon.svg";
-import ConfirmModal from '../modal/ConfirmModal'; 
+//import ConfirmModal from '../modal/ConfirmModal'; 
 
 function DeleteButton({ destinationId, onDelete }) {
 
-  const [isModalOpen, setModalOpen] = useState(false);
+ const [isModalOpen, setModalOpen] = useState(false);
   
   const handleDelete = () => {
     setModalOpen(true); 
@@ -13,19 +13,19 @@ function DeleteButton({ destinationId, onDelete }) {
 
   const handleConfirm = async () => {
     setModalOpen(false);
-
-    try {
+ 
+  try {
 
       onDelete(destinationId);
 
     } catch (error) {
       console.error("Error al eliminar el destino:", error);
     }
-  };
+  }; 
 
-  const handleCancel = () => {
+ const handleCancel = () => {
     setModalOpen(false); 
-  };
+  }; 
 
   return (
     <>
@@ -34,12 +34,12 @@ function DeleteButton({ destinationId, onDelete }) {
         className="h-[2.5rem] w-[1.917rem] cursor-pointer"
         onClick={handleDelete} 
       />
-      <ConfirmModal 
+     {/*  <ConfirmModal 
         isOpen={isModalOpen} 
         message={"¿Quieres eliminar este destino?"}
         onConfirm={handleConfirm}  
         onClose={handleCancel}  
-      />
+      /> */}
     </>
   );
 }

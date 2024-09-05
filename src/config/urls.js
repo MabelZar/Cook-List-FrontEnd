@@ -1,33 +1,35 @@
 export const BASE_URL = "http://localhost:3001";
 
-/* //public endpoints
+//public endpoints
 export const PUBLIC_URL = `${BASE_URL}/auth`;
 export const SIGN_IN_URL = `${PUBLIC_URL}/sign_in`;
 export const LOG_IN_URL = `${PUBLIC_URL}/log_in`;
 export const GET_DESTINATIONS_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`;
 
+//luego borrar
+export const GET_MEAL_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`; 
+export const GET_MEAL_URL = `${PUBLIC_URL}/destinations/location`;
 
 // Protected endpoints
 export const PROTECTED_URL = `${BASE_URL}/api`;
-export const GET_DESTINATIONS_URL = `${PROTECTED_URL}/destinations/location`;
-export const ADD_DESTINATION_URL = `${PROTECTED_URL}/destinations/add`;
-export const getUpdateDestinationUrl = (id) => `${PROTECTED_URL}/destinations/update/${id}`;
-export const getDeleteDestinationUrl = (id) => `${PROTECTED_URL}/destinations/delete/${id}`;
-export const getDestinationDetailsUrl = (id) => `${PROTECTED_URL}/destinations/details/${id}`;
+export const GET_DESTINATIONS_URL = `${PUBLIC_URL}/destinations/location`;
+export const ADD_DESTINATION_URL = `${PUBLIC_URL}/destinations/add`;
+export const getUpdateDestinationUrl = (id) => `${PUBLIC_URL}/destinations/update/${id}`;
+export const getDeleteDestinationUrl = (id) => `${PUBLIC_URL}/destinations/delete/${id}`;
+export const getDestinationDetailsUrl = (id) => `${PUBLIC_URL}/destinations/details/${id}`;
 
- */
+
 //public endpoints
-export const PUBLIC_URL = `${BASE_URL}/auth`;
+/* export const PUBLIC_URL = `${BASE_URL}/auth`;
 export const SIGN_IN_URL = `${PUBLIC_URL}/sign_in`;
 export const LOG_IN_URL = `${PUBLIC_URL}/log_in`;
-export const GET_MEAL_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`;
+export const GET_MEAL_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`; */
 
 
 // Protected endpoints
-export const PROTECTED_URL = `${BASE_URL}/api`;
+/* export const PROTECTED_URL = `${BASE_URL}/api`;
 export const GET_MEAL_URL = `${PROTECTED_URL}/destinations/location`;
 export const ADD_MEAL_URL = `${PROTECTED_URL}/destinations/add`;
 export const getUpdateDestinationUrl = (id) => `${PROTECTED_URL}/destinations/update/${id}`;
 export const getDeleteDestinationUrl = (id) => `${PROTECTED_URL}/destinations/delete/${id}`;
-export const getDestinationDetailsUrl = (id) => `${PROTECTED_URL}/destinations/details/${id}`;
-
+export const getDestinationDetailsUrl = (id) => `${PROTECTED_URL}/destinations/details/${id}`; */

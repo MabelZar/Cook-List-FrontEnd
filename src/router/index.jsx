@@ -22,15 +22,15 @@ export const router = createBrowserRouter ([
     {
         path: "create",
         element: (
-            <PrivateRoute>
+            
                 <CreateLogged />
-            </PrivateRoute>)
+            )
     },
     {
         path: "edit/:id",
         element: (
-            <PrivateRoute>
+           
                 <EditLogged />
-            </PrivateRoute>)
+         )
     },
 ])

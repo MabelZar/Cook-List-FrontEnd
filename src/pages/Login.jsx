@@ -2,7 +2,8 @@ import React from "react";
 import LogInForm from "../components/forms/logInForm/LogInForm"
 import HeaderUser from "../components/header/HeaderUser";
 
-export const Login = () => {
+function Login(){
+//export const Login = () => {
     return(
         <div className="w-full h-auto">
             <HeaderUser/>
@@ -12,3 +13,4 @@ export const Login = () => {
         </div>
     )
 }
+export default Login
