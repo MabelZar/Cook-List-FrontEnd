@@ -18,7 +18,7 @@ export const EditLogged = () => {
             <CreateEditForm
             url={updateUrl}
             method="PUT"
-            headerText="Editar destino"
+            headerText="Editar Plato"
             />
         </main>
         </div>

@@ -5,6 +5,8 @@ import {SignIn} from "../pages/SignIn";
 import {CreateLogged} from "../pages/CreateLogged";
 import {EditLogged} from "../pages/EditLogged";
 import PrivateRoute from "./PrivateRoutes";
+import ListDay from "../components/forms/list/ListDay";
+import { ProgramLogged } from "../pages/ProgramLogged";
 
 export const router = createBrowserRouter ([
     {
@@ -31,6 +33,13 @@ export const router = createBrowserRouter ([
         element: (
            
                 <EditLogged />
+         )
+    },
+    {
+        path: "program",
+        element: (
+           
+                <ProgramLogged />
          )
     },
 ])

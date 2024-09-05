@@ -8,6 +8,7 @@ import Pagination from "../components/buttons/PaginationButton";
 
 import dish from "../../public/assets/dish.png"
 
+
 const Home=()=>{
   const { filteredMeal} = useContext(MealContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +33,7 @@ const Home=()=>{
                   />
              
           </div>
+          
         
           <Pagination
                     currentPage={currentPage}
