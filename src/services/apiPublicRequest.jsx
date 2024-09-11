@@ -1,16 +1,13 @@
 import axios from 'axios';
 
-export const apiRequest = async (endpoint, method = "GET", data = null) => {
+export const apiPublicRequest = async (endpoint, method = "GET", data = null) => {
+    
+    const headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    };
     
     try {
-
-        const token = localStorage.getItem('authToken');
-
-        const headers = {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`
-        };
         
         const response = await axios({
             url: endpoint,   
@@ -31,5 +28,4 @@ export const apiRequest = async (endpoint, method = "GET", data = null) => {
             throw new Error(error.message);
         }
     }
-
 };

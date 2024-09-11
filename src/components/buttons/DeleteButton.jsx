@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Delete from "../../../public/assets/Delete-icon.svg";
-//import ConfirmModal from '../modal/ConfirmModal'; 
+import ConfirmModal from '../modal/ConfirmModal'; 
 
 function DeleteButton({ destinationId, onDelete }) {
 
@@ -34,12 +34,12 @@ function DeleteButton({ destinationId, onDelete }) {
         className="h-[2.5rem] w-[1.917rem] cursor-pointer"
         onClick={handleDelete} 
       />
-     {/*  <ConfirmModal 
+      <ConfirmModal 
         isOpen={isModalOpen} 
         message={"¿Quieres eliminar este destino?"}
         onConfirm={handleConfirm}  
         onClose={handleCancel}  
-      /> */}
+      /> 
     </>
   );
 }

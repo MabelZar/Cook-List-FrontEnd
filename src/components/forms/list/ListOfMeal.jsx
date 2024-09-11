@@ -1,125 +1,86 @@
-/* import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputSearch from "../../inputs/InputSearch";
 import EditButton from "../../buttons/EditButton";
-import DeleteButton from "../../buttons/DeleteButton";
-
-function ListOfMeal({  onEdit, onDelete, type }) {
-    const items = [
-        "ceviche",
-        "lomo saltado",
-        "Plato tallarines verdes",
-        "arroz con pollo",
-      ];
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [filteredItems, setFilteredItems] = useState(items);
-
-  const handleOpenModal = (item) => {
-    setSelectedItem(item);
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
-  const handleSearch = (searchTerm) => {
-    const filtered = items.filter((item) =>
-      item.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredItems(filtered);
-  };
-
-  return (
-    <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
-      <InputSearch onSearch={handleSearch} />
-
-      <ul className="p-4">
-        {filteredItems.map((item) => (
-          <li
-            key={item}
-            className="flex justify-between items-center p-2 border-b"
-          >
-            <span>{item}</span>
-            <div className="flex space-x-2">
-              <button
-                className="p-2"
-                onClick={() => handleOpenModal(item)}
-              >
-                <EditButton item={item} />
-              </button>
-              <button
-                className="p-2"
-                onClick={() => onDelete(item)}
-              >
-                <DeleteButton />
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-md shadow-md">
-            <h3 className="text-lg font-semibold">Edit {type}</h3>
-            {/* Aquí podrías implementar un formulario para editar 
-            <button
-              className="mt-4 bg-gray-500 text-white py-2 px-4 rounded"
-              onClick={handleCloseModal}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default ListOfMeal; */
-
-
-
-
-import React, { useState } from "react";
-import InputSearch from "../../inputs/InputSearch";
-import EditButton from "../../buttons/EditButton";
-import DeleteButton from "../../buttons/DeleteButton";
+import Delete from "../../../../public/assets/Delete-icon.svg"
 import Create from "../../../../public/assets/Create-icon.svg"
+import ConfirmModal from "../../modal/ConfirmModal";
+import FormModal from "../../modal/FormModal"; 
+import { getMealByNameURL } from "../../../config/urls";
 
 function ListOfMeal({ meal, onEdit, onDelete, type }) {
-    const meals = [
-        "ceviche",
-        "lomo saltado",
-        "Plato tallarines verdes",
-        "arroz con pollo",
-      ];
-  const [isModalOpen, setModalOpen] = useState(false);  // Controla si el modal está abierto
+    //const meals = ["ceviche","lomo saltado","Plato tallarines verdes","arroz con pollo"];
+    const [meals, setMeals] = useState([]); 
+    const [isModalOpen, setModalOpen] = useState(false); 
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [isFormModalOpen, setFormModalOpen] = useState(false); 
   const [selectedItem, setSelectedItem] = useState(null); // Controla el ítem seleccionado
   const [searchTerm, setSearchTerm] = useState(""); // Término de búsqueda
+ 
+  useEffect(() => {
+    const fetchMealsByName = async () => {
+      if (searchTerm) { // Solo buscar si hay un término de búsqueda
+        try {
+          const response = await fetch(getMealByNameURL(searchTerm)); // Llama a la API con el nombre
+          if (!response.ok) {
+            throw new Error("Error en la solicitud");
+          }
+          const data = await response.json();
+          setMeals(data); // Actualiza el estado con los datos de la API
+        } catch (error) {
+          console.error("Error al obtener las comidas:", error);
+        }
+      }
+    };
 
+    fetchMealsByName(); // Llama a la función cuando cambie el término de búsqueda
+  }, [searchTerm]); // Dependencia en searchTerm, para ejecutar cada vez que se cambie
+ 
+  
+  
+  
+  
+  
+  
   const handleOpenModal = (meal) => {
-    setSelectedItem(meal); // Establece el ítem seleccionado
-    setModalOpen(true);    // Abre el modal
+     setSelectedItem(meal);
+    setModalOpen(true);    
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false);   // Cierra el modal
+    setModalOpen(false);  
   };
 
   const handleSelectMeal = (meal) => {
-    setSelectedItem(meal); // Establece el ítem seleccionado desde InputSearch
-    handleCloseModal();    // Cierra el modal después de la selección
+    setSelectedItem(meal);
+    handleCloseModal();    
+  };
+  const handleDeleteClick = (meal) => {
+    setSelectedItem(meal); // Establece el ítem que se quiere eliminar
+    setConfirmModalOpen(true); // Abre el modal de confirmación
+  };
+
+  const handleConfirmDelete = () => {
+    setConfirmModalOpen(false); 
+ 
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmModalOpen(false); // Cierra el modal de confirmación sin eliminar
+  
+  };
+  const handleOpenFormModal = () => {
+    setFormModalOpen(true);    // Abre el FormModal
+  };
+
+  const handleCloseFormModal = () => {
+    setFormModalOpen(false);   // Cierra el FormModal
   };
 
   return (
     <>
     
     <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
-     
     <ul className="p-4">
-
     <div className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
           <label className="block mb-2 text-sm text-slate-600">
             Buscar un plato:
@@ -128,10 +89,10 @@ function ListOfMeal({ meal, onEdit, onDelete, type }) {
             <input
               type="text"
               className="w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-              placeholder="Enter your text"
+              placeholder="Busca un plato"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              onClick={() => handleOpenModal(meal)}
+              onClick={() => handleOpenModal(meal)} 
             />
             <button
               className="absolute right-1 top-1 rounded bg-gray-800 p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -154,39 +115,43 @@ function ListOfMeal({ meal, onEdit, onDelete, type }) {
             <label 
               className="flex justify-between items-center p-2 border-b"
             >
-              <span>Agregar uno nuevo{meal}</span>
+              <span>Agregar un plato nuevo{meal}</span>
               <div className="flex space-x-2">
-                <button className="p-2" onClick={() => handleOpenModal(meal)}>
+                <button className="select-none rounded-lg  py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                 onClick={handleOpenFormModal}
+                 type="button"
+                 data-dialog-target="sign-in-dialog">
                   <img
                   src={Create}
                   alt="Create"
                   className="h-[2.5rem] w-[2.5rem] cursor-pointer"
+                  data-dialog-target="sign-in-dialog"
                 />
                 </button>
-                
+               
               </div>
               </label>
-        
       </ul>
-     
-     
-     
       <ul className="p-4">
       <span>Lista de platos existentes:</span>
         {meals.length > 0 ? (
           meals.map((meal, index) => (
             <li
               key={index}
-              className="flex justify-between items-center p-2 border-b"
+              className="flex justify-between items-center p-2 border-b    lex items-center justify-between w-full p-3 py-1 pl-4 pr-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
             >
               <span>{meal}</span>
               <div className="flex space-x-2">
-                <button className="p-2" onClick={() => handleOpenModal(meal)}>
+                <button className="elect-none rounded-lg  py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" 
+                onClick={() => handleOpenModal(meal)}>
                   <EditButton item={meal} />
                 </button>
-                <button className="p-2" onClick={() => handleOpenModal(meal)}>
-                  <DeleteButton />
+                <button className="elect-none rounded-lg  py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" 
+                onClick={() => handleDeleteClick(meal)}>
+                  <img
+                  src={Delete}/>
                 </button>
+                
               </div>
             </li>
           ))
@@ -194,9 +159,11 @@ function ListOfMeal({ meal, onEdit, onDelete, type }) {
           <li className="text-gray-500">No hay comidas disponibles</li>
         )}
       </ul>
-
-      {/* Muestra el modal si isModalOpen es true */}
-     
+      <ConfirmModal
+          isOpen={isConfirmModalOpen}
+          onClose={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
         <InputSearch
           isOpen={isModalOpen}
           onClose={handleCloseModal}
@@ -204,6 +171,7 @@ function ListOfMeal({ meal, onEdit, onDelete, type }) {
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
+         <FormModal isOpen={isFormModalOpen} onClose={handleCloseFormModal}/>
    
     </div>
     </>
@@ -211,4 +179,3 @@ function ListOfMeal({ meal, onEdit, onDelete, type }) {
 }
 
 export default ListOfMeal;
-//crear un buscar para meal y añadoir el boton agregar y ponerle el handleopenmodal / ver si inputserch mepuede servir para tenerlo visible cuando lo quiera 

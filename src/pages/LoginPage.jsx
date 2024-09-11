@@ -1,14 +1,14 @@
-import React from "react";
-import SignInForm from "../components/forms/signInForm/SignInForm"
+import LogInForm from "../components/forms/logInForm/LogInForm"
 import HeaderUser from "../components/header/HeaderUser";
 
-export const SignIn = () => {
+function LoginPage(){
     return(
         <div className="w-full h-auto">
             <HeaderUser/>
             <main className="w-full h-auto flex justify-center items-center">
-                <SignInForm />
+                <LogInForm />
             </main>
         </div>
     )
 }
+export default LoginPage;

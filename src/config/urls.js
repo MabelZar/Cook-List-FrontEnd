@@ -1,35 +1,11 @@
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "http://localhost:8080";
 
 //public endpoints
-export const PUBLIC_URL = `${BASE_URL}/auth`;
-export const SIGN_IN_URL = `${PUBLIC_URL}/sign_in`;
-export const LOG_IN_URL = `${PUBLIC_URL}/log_in`;
-export const GET_DESTINATIONS_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`;
+//export const AUTHENTICATION = `${BASE_URL}/authentication`;
+export const LOG_IN_URL = `${BASE_URL}/authentication/login`;
+export const SIGN_IN_URL = `${BASE_URL}/authentication/register`;
 
-//luego borrar
-export const GET_MEAL_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`; 
-export const GET_MEAL_URL = `${PUBLIC_URL}/destinations/location`;
-
-// Protected endpoints
-export const PROTECTED_URL = `${BASE_URL}/api`;
-export const GET_DESTINATIONS_URL = `${PUBLIC_URL}/destinations/location`;
-export const ADD_DESTINATION_URL = `${PUBLIC_URL}/destinations/add`;
-export const getUpdateDestinationUrl = (id) => `${PUBLIC_URL}/destinations/update/${id}`;
-export const getDeleteDestinationUrl = (id) => `${PUBLIC_URL}/destinations/delete/${id}`;
-export const getDestinationDetailsUrl = (id) => `${PUBLIC_URL}/destinations/details/${id}`;
-
-
-//public endpoints
-/* export const PUBLIC_URL = `${BASE_URL}/auth`;
-export const SIGN_IN_URL = `${PUBLIC_URL}/sign_in`;
-export const LOG_IN_URL = `${PUBLIC_URL}/log_in`;
-export const GET_MEAL_NO_AUTH_URL = `${PUBLIC_URL}/destinations/location`; */
-
-
-// Protected endpoints
-/* export const PROTECTED_URL = `${BASE_URL}/api`;
-export const GET_MEAL_URL = `${PROTECTED_URL}/destinations/location`;
-export const ADD_MEAL_URL = `${PROTECTED_URL}/destinations/add`;
-export const getUpdateDestinationUrl = (id) => `${PROTECTED_URL}/destinations/update/${id}`;
-export const getDeleteDestinationUrl = (id) => `${PROTECTED_URL}/destinations/delete/${id}`;
-export const getDestinationDetailsUrl = (id) => `${PROTECTED_URL}/destinations/details/${id}`; */
+// Meals endpoints
+export const getMealByNameURL = (name) =>`${BASE_URL}/meal/find-by-name/${name}`;
+export const CREATE_UPDATE_MEAL_BY_DAY = `${BASE_URL}/meal-programming/create-or-update`;
+export const DELETE_MEAL_BY_DAY=`${BASE_URL}/meal-programming/create-or-update`;

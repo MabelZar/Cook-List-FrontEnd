@@ -22,7 +22,7 @@ const CommonInput=forwardRef(({
         <div className={`w-[18.75rem] flex flex-col ${divInputClassName}`}>
             <label
                 htmlFor={id}
-                className={`jaldi-bold text-md text-[color:var(--col-blue)] leading-[2.063rem] w-full ${labelClassName}`}
+                className={`block  text-sm text-slate-600 ${labelClassName}`}
             >
                 {label}
             </label>
@@ -39,7 +39,7 @@ const CommonInput=forwardRef(({
                 ) : (
                     <input
                         id={id}
-                        className={`custom-input rounded-[1.25rem] w-full h-[2.5rem] text-[color:var(--col-blue)] bg-[color:var(--col-yellow-light)] text-md pl-[1.063rem] shadow-inset-custom border-0 focus:border-2 focus:border-[color:var(--col-green)] outline-none ${inputClassName}`}
+                        className={`  input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Type here..." />${inputClassName}`}
                         placeholder={placeholder}
                         type={type}
                         ref={ref}

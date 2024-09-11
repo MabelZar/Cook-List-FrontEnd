@@ -55,6 +55,7 @@ function ListCheckByProgram({isOpen, onClose}) {
               </label>
             </div>
           ))}
+          <div className="flex justify-center  w-full gap-4">
           <Button
             nameButton="Compartir"
             onClick={onClose} //cambiar para whatsUp
@@ -63,6 +64,7 @@ function ListCheckByProgram({isOpen, onClose}) {
             nameButton="Cerrar"
             onClick={onClose} 
         />
+        </div>
         </nav>
         </div>
       </div>

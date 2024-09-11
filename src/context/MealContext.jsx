@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { GET_MEAL_URL, GET_MEAL_NO_AUTH_URL } from "../config/urls";
 import { apiRequest } from "../services/apiRequest";
 import { AuthContext } from "../auth/AuthWrapper";
 
@@ -15,9 +14,9 @@ export const MealProvider = ({ children }) => {
 
     const fetchMeal = async () => {
         try {
-            const url = authToken ? GET_MEAL_URL : GET_MEAL_NO_AUTH_URL;
+            const url = authToken ? "GET_MEAL_URL" : "GET_MEAL_NO_AUTH_URL";
             const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
-            const data = await apiRequest(url, 'GET', null, headers);
+            /*const data = await apiRequest(url, 'GET', null, headers);
 
             let sortedMeal = [];
 
@@ -31,7 +30,7 @@ export const MealProvider = ({ children }) => {
             }
 
             setMeal(sortedMeal);
-            setFilteredMeal(sortedMeal);
+            setFilteredMeal(sortedMeal);*/
         } catch (error) {
             console.error('Error fetching destinations:', error);
         }

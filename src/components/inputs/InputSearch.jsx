@@ -1,23 +1,20 @@
-function InputSeach({
-  isOpen,
-  onClose,
-  onSelectItem,
-  searchTerm = "",
-  setSearchTerm,
-}) {
-  const items = [
-    "ceviche",
-    "lomo saltado",
-    "Plato tallarines verdes",
-    "arroz con pollo",
-  ];
-  const filteredItems = items.filter((item) =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+import { useState } from "react";
+import { getMealByNameURL } from "../../config/urls";
+import { apiRequest } from "../../services/apiRequest";
 
-  const handleSelectItem = (item) => {
-    onSelectItem(item);
-    onClose();
+function InputSeach({ isOpen, dayKey, handleSelectedMeal }) {
+  const [meals, setMeals] = useState([]);
+
+  const setSearchTerm = async (searchName) => {
+    if (searchName && searchName.length >= 2) {
+      try {
+        const response = await apiRequest(getMealByNameURL(searchName));
+
+        setMeals(response);
+      } catch (error) {
+        console.error("Error al obtener las comidas:", error);
+      }
+    }
   };
   if (!isOpen) return null;
 
@@ -32,8 +29,7 @@ function InputSeach({
             <input
               type="text"
               className="w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-              placeholder="Enter your text"
-              value={searchTerm}
+              placeholder="Enter your text.."
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button
@@ -56,20 +52,18 @@ function InputSeach({
           </div>
 
           <ul className="mb-4">
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
+            {meals.length > 0 ? (
+              meals.map((meal) => (
                 <li
-                  key={index}
+                  key={meal.id}
                   className="cursor-pointer p-2 border-b border-slate-200 hover:bg-slate-100"
-                  onClick={() => handleSelectItem(item)}
+                  onClick={() => handleSelectedMeal(dayKey, meal)}
                 >
-                  {item}
+                  {meal.name}
                 </li>
               ))
             ) : (
-              <li className="text-slate-500 p-2">
-                No se encontraron resultados
-              </li>
+              <li />
             )}
           </ul>
         </div>
@@ -77,4 +71,5 @@ function InputSeach({
     </>
   );
 }
+
 export default InputSeach;
