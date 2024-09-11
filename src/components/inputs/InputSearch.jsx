@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getMealByNameURL } from "../../config/urls";
 import { apiRequest } from "../../services/apiRequest";
 
-function InputSeach({ isOpen, dayKey, handleSelectedMeal }) {
+function InputSeach({ isOpen, dayKey, handleSelectedMeal, onClose }) {
   const [meals, setMeals] = useState([]);
-
+ 
   const setSearchTerm = async (searchName) => {
     if (searchName && searchName.length >= 2) {
       try {
@@ -22,9 +22,20 @@ function InputSeach({ isOpen, dayKey, handleSelectedMeal }) {
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
-          <label className="block mb-2 text-sm text-slate-600">
-            Escoge un plato:
-          </label>
+          <div className="flex justify-between items-center mb-4">
+            <label className="text-sm text-slate-600">
+              Escoge un plato:
+            </label>
+            {onClose && (
+              <button
+                className=" rounded bg-gray-800 p-1.5 w-8 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+                onClick={() => onClose()}
+              >
+              X</button>
+            )}
+          </div>
+
           <div className="relative">
             <input
               type="text"
