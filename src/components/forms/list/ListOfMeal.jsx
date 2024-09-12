@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from "react";
-import EditButton from "../../buttons/EditButton";
 import Delete from "../../../../public/assets/Delete-icon.svg";
 import Create from "../../../../public/assets/Create-icon.svg";
 import ConfirmModal from "../../modal/ConfirmModal";
 import FormModal from "../../modal/FormModal";
-import { GET_ALL, getMealByNameURL } from "../../../config/urls";
+import { MEAL_GET_ALL, deleteMealById } from "../../../config/urls";
 import { apiRequest } from "../../../services/apiRequest";
 import Edit from "../../../../public/assets/Edit-icon.svg";
 
-function ListOfMeal({
-  meal,
-  onEdit,
-  onDelete,
-  handleSelectedMeal,
-  id
-}) { 
+function ListOfMeal() {
   const [meals, setMeals] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [filteredMeals, setFilteredMeals] = useState([]); 
-  const [selectedMeal, setSelectedMeal] = useState(null); // Controla el ítem seleccionado
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMeals, setFilteredMeals] = useState([]);
+  const [selectedMeal, setSelectedMeal] = useState(null); 
   const [modalState, setModalState] = useState({
     isFormModalOpen: false,
     isConfirmModalOpen: false,
-    modalMode: "", // 'agregar' o 'editar'
+    modalMode: "", 
   });
+
   const getAll = async () => {
     try {
-      const response = await apiRequest(GET_ALL, "GET");
+      console.info("get all");
+      const response = await apiRequest(MEAL_GET_ALL, "GET");
       setMeals(response);
       setFilteredMeals(response);
-      console.info(response);
     } catch (error) {
       console.error("Error al obtener las comidas:", error);
     }
   };
+  
   useEffect(() => {
     getAll();
   }, []);
-//busqueda
+
+  //busqueda
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+
   useEffect(() => {
     if (searchTerm === "") {
       setFilteredMeals(meals);
@@ -53,37 +50,52 @@ function ListOfMeal({
   }, [searchTerm, meals]);
 
   // Abrir el modal para agregar o editar
-const handleOpenFormModal = (mode, meal = null) => {
-  setModalState({
-    ...modalState,
-    isFormModalOpen: true,
-    modalMode: mode,
-  });
-  setSelectedMeal(meal);
-};
- // Cerrar modal de formulario
- const handleCloseFormModal = () => {
-  setModalState((prevState) => ({
-    ...prevState,
-    isFormModalOpen: false,
-  }));
-  setSelectedMeal(null);
-};
-// Manejar apertura del modal de confirmación
-const handleDeleteClick = (meal) => {
-  setSelectedMeal(meal); // Establecer comida a eliminar
-  setModalState({ ...modalState, isConfirmModalOpen: true });
-};
- // Confirmar eliminación
- const handleConfirmDelete = () => {
-  // Aquí puedes llamar a tu API para eliminar el plato
-  setModalState({ ...modalState, isConfirmModalOpen: false });
-  // Actualizar lista después de la eliminación
-};
-// Cancelar eliminación
-const handleCancelDelete = () => {
-  setModalState({ ...modalState, isConfirmModalOpen: false });
-};
+  const handleOpenFormModal = (mode, meal = null) => {
+    setModalState({
+      ...modalState,
+      isFormModalOpen: true,
+      modalMode: mode,
+    });
+    setSelectedMeal(meal);
+  };
+
+  // Cerrar modal de formulario
+  const handleCloseFormModal = () => {
+    setModalState((prevState) => ({
+      ...prevState,
+      isFormModalOpen: false,
+    }));
+    setSelectedMeal(null);
+
+    setTimeout(getAll, 500);
+  };
+
+  // Manejar apertura del modal de confirmación
+  const handleDeleteClick = (meal) => {
+    setSelectedMeal(meal); // Establecer comida a eliminar
+    setModalState({ ...modalState, isConfirmModalOpen: true });
+  };
+
+  // Confirmar eliminación
+  const handleConfirmDelete = async (meal) => {
+    try {
+      const response = await apiRequest(deleteMealById(meal.id), "DELETE");
+      setMeals(response);
+      setFilteredMeals(response);
+      console.info(response);
+    } catch (error) {
+      console.error("Error al obtener las comidas:", error);
+    }
+    setModalState({ ...modalState, isConfirmModalOpen: false });
+
+    getAll();
+  };
+
+  // Cancelar eliminación
+  const handleCancelDelete = () => {
+    setModalState({ ...modalState, isConfirmModalOpen: false });
+  };
+
   return (
     <>
       <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
@@ -97,9 +109,7 @@ const handleCancelDelete = () => {
                 type="text"
                 className="w-full  placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-10 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="Busca un plato"
-                // value={searchTerm}
                 onChange={handleSearch}
-                //onClick={() => handleOpenModal(meal)}
               />
               <button
                 className="absolute right-1 top-1 rounded bg-gray-800 p-1.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -122,7 +132,7 @@ const handleCancelDelete = () => {
           </div>
 
           <label className="flex justify-between items-center p-2 border-b">
-            <span>Agregar un plato nuevo{meal}</span>
+            <span>Agregar un plato nuevo</span>
             <div className="flex space-x-2">
               <button
                 className="select-none rounded-lg  py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -176,15 +186,16 @@ const handleCancelDelete = () => {
         <ConfirmModal
           isOpen={modalState.isConfirmModalOpen}
           onClose={handleCancelDelete}
-          onConfirm={handleConfirmDelete}
+          onConfirm={() => handleConfirmDelete(selectedMeal)}
           message="¿Desea eliminar el plato?"
         />
 
-        <FormModal 
-        isOpen={modalState.isFormModalOpen} 
-        onClose={handleCloseFormModal}
-        modalMode={modalState.modalMode} 
-        selectedMeal={selectedMeal} />
+        <FormModal
+          isOpen={modalState.isFormModalOpen}
+          onClose={handleCloseFormModal}
+          modalMode={modalState.modalMode}
+          selectedMeal={selectedMeal}
+        />
       </div>
     </>
   );

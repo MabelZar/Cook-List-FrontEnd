@@ -21,7 +21,8 @@ function MealProgramBody(method) {
 
   const [isSearchMealModalOpen, setSearchMealModalOpen] = useState(false);
   const [selectedDayKey, setSelectedDayKey] = useState("");
-  const [isValidWeekProg, setValidWeekProg] = useState(false);
+  const [isValidSaveWeekProg, setValidSaveWeekProg] = useState(false);
+  const [isValidSeeIngredients, setValidSeeIngredients] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false); 
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
@@ -147,24 +148,33 @@ function MealProgramBody(method) {
     addOrUpdateDay(dayKey, dayProgramming);
   };
 
-  const validateWeekProgramming = () => {
-    let isValid = false;
+  const validateMealProgrammingWeek = () => {
+    let isValidSave = false;
+    let isValidSee = false;
 
     if (mealProgrammingWeek) {
       Object.keys(mealProgrammingWeek).map((dayKey) => {
         const { meal, programming } = mealProgrammingWeek[dayKey];
         if (meal && programming) {
-          isValid = true;
+          isValidSave = true;
+          return;
+        }
+      });
+      Object.keys(mealProgrammingWeek).map((dayKey) => {
+        const { meal } = mealProgrammingWeek[dayKey];
+        if (meal) {
+          isValidSee = true;
           return;
         }
       });
     }
 
-    setValidWeekProg(isValid);
+    setValidSaveWeekProg(isValidSave);
+    setValidSeeIngredients(isValidSee);
   };
 
   useEffect(() => {
-    validateWeekProgramming();
+    validateMealProgrammingWeek();
   }, [mealProgrammingWeek]);
 
   const handleConfirm = () => {
@@ -231,11 +241,12 @@ function MealProgramBody(method) {
         <Button
           nameButton={"Guardar Programación"}
           onClick={handleSaveProgrammingWeek}
-          disabled={!isValidWeekProg}
+          disabled={!isValidSaveWeekProg}
         />
         <Button
           nameButton={"Ver Ingredientes"}
           onClick={handleShowIngredients}
+          disabled={!isValidSeeIngredients}
         />
         <ListCheckByProgram
           isOpen={isIngredientsModalOpen}
