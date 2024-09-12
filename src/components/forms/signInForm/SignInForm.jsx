@@ -49,11 +49,11 @@ const SignInForm = () => {
 
   return (
     <Card
-      className="w-[23.125rem] h-[30.438rem] my-[5rem] border-[color:var(--col-yellow-light)] border-4 border-solid flex flex-col items-center justify-center"
+      className="w-[23.125rem] h-[33.438rem] my-[5rem] border-[color:var(--col-yellow-light)] border-4 border-solid flex flex-col items-center justify-center"
       headerText="Registro de usuario"
     >
       <form
-        className="w-[23.125rem] h-[30.438rem]"
+        className="w-[23.125rem] h-[30.438rem] "
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="mb-1 flex flex-col gap-6 items-center">

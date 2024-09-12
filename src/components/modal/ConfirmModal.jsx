@@ -4,8 +4,9 @@ function ConfirmModal({
   isOpen,
   onClose,
   onConfirm,
-  message
- 
+  message,
+   showOnlyAccept = false,
+    
 }) {
   if (!isOpen) return null;
 
@@ -20,23 +21,36 @@ function ConfirmModal({
           onClick={(e) => e.stopPropagation()} // Evita cerrar el modal al hacer clic dentro del mismo
         >
           <h2 className="relative p-4 font-sans text-base antialiased font-light leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
-            ¿Está seguro que desea eliminar este plato?
+            {showOnlyAccept ? "¡Operación exitosa!" : message}
           </h2>
-          <div className="flex flex-wrap items-center justify-end p-4 shrink-0 text-blue-gray-500">
-            <button
-              className="px-6 py-3 mr-1 font-sans text-xs font-bold text-red-500 uppercase transition-all rounded-lg middle none center hover:bg-red-500/10 active:bg-red-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              onClick={onConfirm}
-            >
-              Aceptar
-            </button>
-            <button
-              className="middle none center rounded-lg bg-gradient-to-tr from-green-600 to-green-400 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              onClick={onClose}
-            >
-              Cancelar
-            </button>
-           
-          </div>
+
+          {showOnlyAccept ? (
+            <div className="flex items-center justify-center mt-4">
+              <button
+                className="px-6 py-3 font-sans text-xs font-bold text-white bg-green-500 rounded-lg uppercase transition-all hover:bg-green-600 active:bg-green-700"
+                onClick={onClose}
+              >
+                Aceptar
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-end p-4 space-x-2">
+              {!showOnlyAccept && (
+                <button
+                  className="px-6 py-3 text-xs font-bold uppercase text-gray-500 transition-all bg-gray-100 rounded-lg hover:bg-gray-200 active:bg-gray-300"
+                  onClick={onClose}
+                >
+                  Cancelar
+                </button>
+              )}
+              <button
+                className="px-6 py-3 text-xs font-bold text-white uppercase bg-red-500 rounded-lg hover:bg-red-600 active:bg-red-700 transition-all"
+                onClick={onConfirm}
+              >
+                Aceptar
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

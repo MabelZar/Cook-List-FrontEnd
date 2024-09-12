@@ -5,7 +5,7 @@ function SelectOption({ label, options, onChange }) {
         <label className="block mb-1 text-sm text-slate-800">{label}</label>
         <div className="relative">
           <select
-            className="w-[3.5rem]  h-10 bg-white text-slate-700 text-sm border border-slate-200 rounded px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md cursor-pointer"
+            className="w-[3.8rem]  h-10 bg-white text-slate-700 text-sm border border-slate-200 rounded px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md cursor-pointer"
             onChange={onChange}
           >
             {options.map((option, index) => (

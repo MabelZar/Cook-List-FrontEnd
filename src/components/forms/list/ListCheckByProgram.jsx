@@ -7,7 +7,7 @@ function ListCheckByProgram({ isOpen, onClose, items = [] }) {
       <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
       <div className="fixed inset-0 flex items-center justify-center z-50   ">
         <div className="relative flex flex-col rounded-xl bg-white shadow-lg p-4">
-          <nav className="flex min-w-[240px] flex-col gap-1 p-2 ">
+          <nav className="flex min-w-[350px] flex-col gap-1 p-2 ">
             <div className="flex justify-between items-center mb-4">
               <label className="text-sm text-slate-600">Lista de Compras</label>
               {onClose && (

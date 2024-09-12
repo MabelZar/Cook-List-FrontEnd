@@ -10,7 +10,9 @@ import {
   CREATE_UPDATE_MEAL_BY_DAY,
   DELETE_MEAL_BY_DAY,
 } from "../../../config/urls";
+import ConfirmModal from "../../modal/ConfirmModal"
 import ListCheckByProgram from "./ListCheckByProgram";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function MealProgramBody(method) {
   const [mealProgrammingWeek, setMealProgrammingWeek] = useState({});
@@ -20,7 +22,9 @@ function MealProgramBody(method) {
   const [isSearchMealModalOpen, setSearchMealModalOpen] = useState(false);
   const [selectedDayKey, setSelectedDayKey] = useState("");
   const [isValidWeekProg, setValidWeekProg] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false); 
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const dayKeysList = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
   const dayNameByKey = {
@@ -71,7 +75,7 @@ function MealProgramBody(method) {
     setSelectedDayKey(dayKey);
     setSearchMealModalOpen(true);
   };
-
+//guardar programacion semanal
   const handleSaveProgrammingWeek = async () => {
     const transformedData = Object.keys(mealProgrammingWeek)
       .map((dayKey) => {
@@ -95,8 +99,12 @@ function MealProgramBody(method) {
         "POST",
         transformedData
       );
+      const successMessage = method === 'POST' 
+      ? "¡Programa guardado con éxito!"
+      : "¡Plato editado con éxito!";
+      setSuccessMessage(successMessage);
       console.log("Datos guardados exitosamente:", response.data);
-      setSuccessMessage("programacion guardada");
+      setModalOpen(true);
     } catch (error) {
       console.error("Error al guardar los datos:", error);
     }
@@ -121,8 +129,6 @@ function MealProgramBody(method) {
       console.log("Mostrando ingredientes exitosamente:", response);
       setIngredients(response); 
       setIngredientsModalOpen(true); 
-
-      setSuccessMessage("Ingredientes!");
     } catch (error) {
       console.error("Error al mostrar los datos:", error);
     }
@@ -160,6 +166,11 @@ function MealProgramBody(method) {
   useEffect(() => {
     validateWeekProgramming();
   }, [mealProgrammingWeek]);
+
+  const handleConfirm = () => {
+    setModalOpen(false);  
+    navigate("/program");
+};
 
   return (
     <>
@@ -230,6 +241,14 @@ function MealProgramBody(method) {
           isOpen={isIngredientsModalOpen}
           onClose={() => setIngredientsModalOpen(false)}
           items={ingredients} 
+        />
+        <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirm}
+        message={successMessage}
+        showOnlyAccept={true} 
+     
         />
       </div>
     </>

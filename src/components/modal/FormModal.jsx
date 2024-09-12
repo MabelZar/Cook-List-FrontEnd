@@ -11,9 +11,9 @@ import { apiRequest } from "../../services/apiRequest";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
-const FormModal = ({ url, method,isOpen, onClose, searchQuery, handleSearchChange, headerText, handleCloseModal, handleSelectItem, searchTerm, setSearchTerm }) => {
-  
- const { refreshMeals } = useContext(MealContext); 
+const FormModal = ({ url, method,isOpen, onClose, searchQuery, handleSearchChange, modalMode, handleCloseModal, handleSelectItem, searchTerm, setSearchTerm }) => {
+  const headerText = modalMode === "editar" ? "Editar Plato" : "Agregar Plato";
+ //const { refreshMeals } = useContext(MealContext); 
   const userId = localStorage.getItem('userId');
   const [isModalOpen, setModalOpen] = useState(false); 
     const [successMessage, setSuccessMessage] = useState(""); 
@@ -72,8 +72,8 @@ const onSubmit = async (data) => {
       <>
         <div className="fz-50 fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 gap-4 p-6">
           <div className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg flex flex-col gap-4 p-6">
-            <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-              Agregar
+            <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900" >
+            {headerText}
             </h4>
             <Input label="Ingresa el nombre de tu plato" />
   
@@ -92,12 +92,7 @@ const onSubmit = async (data) => {
                 selectOptionsCantidad={selectOptionsCantidad}
                 selectOptionsMedida={selectOptionsMedida}
               />
-              <IngredientRow
-                searchQuery={searchQuery}
-                handleSearchChange={handleSearchChange}
-                selectOptionsCantidad={selectOptionsCantidad}
-                selectOptionsMedida={selectOptionsMedida}
-              />
+              
   
             </div>
   
