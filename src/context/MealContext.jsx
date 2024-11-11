@@ -16,21 +16,7 @@ export const MealProvider = ({ children }) => {
         try {
             const url = authToken ? "GET_MEAL_URL" : "GET_MEAL_NO_AUTH_URL";
             const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
-            /*const data = await apiRequest(url, 'GET', null, headers);
-
-            let sortedMeal = [];
-
-            if (authToken) {
-                const loggedUserId = parseInt(localStorage.getItem("userId"), 10);
-                const userMeal = data.filter(meal => meal.user.id === loggedUserId);
-                const otherMeal = data.filter(meal => meal.user.id !== loggedUserId);
-                sortedMeal = [...userMeal, ...otherMeal];
-            } else {
-                sortedMeal = data;
-            }
-
-            setMeal(sortedMeal);
-            setFilteredMeal(sortedMeal);*/
+         
         } catch (error) {
             console.error('Error fetching destinations:', error);
         }

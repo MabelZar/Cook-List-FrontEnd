@@ -70,13 +70,11 @@ function ListOfMeal() {
     setTimeout(getAll, 500);
   };
 
-  // Manejar apertura del modal de confirmación
   const handleDeleteClick = (meal) => {
-    setSelectedMeal(meal); // Establecer comida a eliminar
+    setSelectedMeal(meal); 
     setModalState({ ...modalState, isConfirmModalOpen: true });
   };
 
-  // Confirmar eliminación
   const handleConfirmDelete = async (meal) => {
     try {
       const response = await apiRequest(deleteMealById(meal.id), "DELETE");
@@ -91,7 +89,6 @@ function ListOfMeal() {
     getAll();
   };
 
-  // Cancelar eliminación
   const handleCancelDelete = () => {
     setModalState({ ...modalState, isConfirmModalOpen: false });
   };

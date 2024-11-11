@@ -1,20 +1,4 @@
-/* .WeekPicker{
-    margin-left: 10px;
-    
-}
 
-.rs-calendar-table-cell-week-number{
-    background-color: black;
-    color: white;
-    padding: 10px;
-    font-weight: bold;
-}
-.rs-calendar-table-row:not(.rs-calendar-table-header-row):hover .rs-calendar-table-cell-content {
-    background-color: rgba(204,233,255,.5);
-    background-color: var(--rs-listbox-option-hover-bg);
-    color: #1675e0;
-    color: var(--rs-listbox-option-hover-text);
-} */
 .WeekPicker{
     margin-left: 10px;
 }

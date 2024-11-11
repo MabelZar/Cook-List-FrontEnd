@@ -5,10 +5,6 @@ import DeleteButton from "../buttons/DeleteButton";
 
 
 function MealCardUser({ meal, currentUser, onDelete }) {
-    //const userId = localStorage.getItem('userId'); 
-    //const isAuthenticated = !!currentUser;
-    //const isCreator = currentUser && meal.user && meal.user.id.toString() === userId;
-
     return (
         <div className="bg-[color:var(--col-yellow-light)] w-[18.75rem] h-[23.313rem] rounded-[1.25rem] shadow-lg overflow-hidden relative">
             <img src={meal.urlImage} alt={meal.title} className="w-full h-[18.75rem] rounded-[1.25rem] object-cover" />

@@ -61,6 +61,3 @@ const IngredientRow = ({
   );
 };
 export default IngredientRow;
-
-//  onClick={() => handleDeleteClick(meal)}
-//  onClick={() => handleDeleteClick(meal)}
