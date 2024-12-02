@@ -32,11 +32,11 @@ function WeekPicker({ onWeekSelected }) {
         dateFrom,
         dateTo,
         weekNumber: moment(date).isoWeek(),
-        weekDays, // Añadir aquí la lista de días de la semana
+        weekDays,
       });
 
       if (onWeekSelected) {
-        onWeekSelected(weekDays); // Pasamos los días de la semana seleccionados al componente padre
+        onWeekSelected(weekDays);
       }
     } else {
       setObjWeek({
@@ -44,7 +44,7 @@ function WeekPicker({ onWeekSelected }) {
         dateFrom: null,
         dateTo: null,
         weekNumber: null,
-        weekDays: null, // Añadir aquí la lista de días de la semana
+        weekDays: null, 
       });
       onWeekSelected(null);
     }
